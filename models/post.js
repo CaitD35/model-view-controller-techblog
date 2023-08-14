@@ -1,18 +1,45 @@
-module.exports = (sequelize, DataTypes) => {
-  const Post = sequelize.define('Post', {
-    // ... as before ...
-  });
+const sequelize = require('../config/connfig');
+const { Model, DataTypes } = require('sequelize');
 
-  Post.associate = models => {
-    Post.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'author'
-    });
-    Post.hasMany(models.Comment, {
-      foreignKey: 'postId',
-      as: 'comments'
-    });
-  };
+class Post extends Model {}
 
-  return Post;
-};
+Post.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement:true,
+    },
+
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    dateCreated: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model:'user',
+        key:'id',
+      },
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName:'post',
+  }
+);
+
+module.exports = Post;

@@ -1,18 +1,48 @@
-module.exports = (sequelize, DataTypes) => {
-  const Comment = sequelize.define('Comment', {
-    // ... as before ...
-  });
+const sequelize = require ('../config/connfig');
+const { Model, DataTypes } = require('sequelize');
 
-  Comment.associate = models => {
-    Comment.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'author'
-    });
-    Comment.belongsTo(models.Post, {
-      foreignKey: 'postId',
-      onDelete: 'CASCADE' // if post is deleted, delete the comment as well.
-    });
-  };
+class User extends Model {}
 
-  return Comment;
-};
+Comment.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    comment_text: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    dateCreated: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
+    postId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'post',
+        key: 'id',
+      },
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'comment',
+  }
+);
+
+module.exports = Comment;

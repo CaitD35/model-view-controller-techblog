@@ -1,20 +1,32 @@
-const Sequelize = require('sequelize');
-const config = require('../config/config.json');
-const {User} = require('../models');
+const User = require('./User');
+const Post = require('./Post');
+const Comment = require('./Comment');
 
-const db = {};
+User.hasMany(Post, {
+  foreignKey: 'userId',
+  onDelete: 'CASCADE'
+});
 
-const sequelize = new Sequelize(config.development);  // Using development config for now
+Post.belongsTo(User, {
+  foreignKey: 'userId'
+});
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+Comment.belongsTo(User, {
+  foreignKey: 'userId'
+});
 
-db.user = require('./user.js')(sequelize, Sequelize);  // Adjust the path if your user model file has a different name or path
+Comment.belongsTo(Post, {
+  foreignKey: 'postId'
+});
 
-// Add similar lines for other models if you have them
-// db.someModel = require('./someModel.js')(sequelize, Sequelize);
+User.hasMany(Comment, { 
+  foreignKey: 'userId',
+  onDelete: 'CASCADE'
+});
 
-// If you have associations, set them up here. For example:
-// db.user.hasMany(db.someModel);
+Post.hasMany(Comment, {
+  foreignKey: 'postId',
+  onDelete: 'CASCADE'
+});
 
-module.exports = db;
+module.exports = { User, Post, Comment };
