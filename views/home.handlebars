@@ -1,0 +1,11 @@
+{{> navbar}}
+
+<h1>Welcome to the Blog CMS</h1>
+
+{{#each posts as |post|}}
+<article>
+    <h2><a href="/posts/{{post.id}}">{{post.title}}</a></h2>
+    <p>Posted by {{post.user.username}} on {{post.createdAt}}</p>
+    <p>{{post.content}}</p>
+</article>
+{{/each}}
