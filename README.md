@@ -11,3 +11,25 @@ The user will also have an option to access any exisiting blog posts on the page
 The user also has an option to create a new post and review any exisiting posts the user has created. 
 
 
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+
+## Installation
+
+To install this application, clone the code into your terminal for the respective repository. Then, install npm by entering the command ```npm install```  into the terminal.
+
+## Usage
+
+To use this application, enter the command ```npm start``` into the terminal and then open your browser and enter ```localhost:3001``` into the address bar.
+
+## License
+
+This application is licensed under the MIT license.
+
+
+## Deployed Application
+
+Click [here](https://mvc-tech-blogcd-d81620dd9bbd.herokuapp.com/) to view the deployed application on Heroku.
